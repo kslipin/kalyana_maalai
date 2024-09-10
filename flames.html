@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+
+    </title>
+    <style>
+      body{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .row1{
+        display: flex;
+        gap: 10px;
+      }
+      .boy{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 450px;
+        width: 400px;
+        background-color: bisque;
+        border-style:solid ;
+      }
+      .result{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 450px;
+        width: 400px;
+        margin-top: 10px;
+        background-color: bisque;
+        border-style:solid ;
+      }
+      .name{
+        align-self: center;
+        justify-self: center;
+        font-size:30px;
+        font-weight: bold;
+      }
+      .fetch_photo{
+        font-weight: bold;
+        font-size: large;
+        margin-top: 10px;
+        margin-bottom: 20px;
+      }
+      .photo_frame{
+        height: 250px;
+        width: 210px;
+      }
+      .photo{
+        height: 100%;
+        width: 100%;
+        object-fit:crop;
+      }
+      .gen_res{
+        height: 50px;
+        font-weight: bold;
+        font-size: large;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row1">
+    <div class="boy">
+      <p class="name">Paiyan Name</p>
+      <input type="text" id="paiyan">
+      <button class="fetch_photo" onclick="fetch_boy();">Fetch</button>
+      <div class="photo_frame" id="boy_pic">
+        <img src="./images/default_boy.png" class="photo">
+      </div>
+    </div>
+    <div class="boy">
+      <p class="name">Ponnu Name</p>
+      <input type="text" id="ponnu">
+      <button class="fetch_photo" onclick="fetch_girl();">Fetch</button>
+      <div class="photo_frame" id="girl_pic">
+        <img src="./images/default_girl.png" class="photo">
+      </div>
+    </div>
+  </div>
+  <div class="result">
+    <button onclick="future();" class="gen_res">GENERATE RESULT</button>
+    <p class="final" id="finale"></p>
+    <div class="photo_frame" id="res_pic">
+      <img src="./images/default_girl.png" class="photo">
+    </div>
+    
+  </div>
+    <script>
+      function fetch_boy()
+      {
+        document.getElementById('boy_pic').innerHTML=`<img src="./images/`+document.getElementById("paiyan").value+`.jpg" class="photo">`;
+      }
+      function fetch_girl()
+      {
+        document.getElementById('girl_pic').innerHTML=`<img src="./images/`+document.getElementById("ponnu").value+`.jpg" class="photo">`;
+      }
+      function future()
+      {
+        let boy=document.getElementById("paiyan").value;
+        let girl=document.getElementById("ponnu").value;
+        let tot_len=(boy.length)+(girl.length);
+        let result="";
+        let flames=['FRIENDS','LOVE','AFFECTION','MARRIAGE','ENEMY','SIBLINGS'];
+        let boy_array=[];
+        if(boy==="lipin")
+      {
+        document.getElementById('res_pic').innerHTML="Don't Messup with Lipin";
+        return 
+      }
+        for (let index = 0; index < boy.length; index++) {
+          const element = boy[index];
+          boy_array.push(element);
+        }
+        console.log(boy_array);
+        for (let index = 0; index < girl.length; index++) {
+          const element = girl[index];
+          if(boy_array.includes(element))
+           {
+            tot_len=tot_len-2;
+            let new_=[];
+            boy_array.splice(boy_array.indexOf(element),1);
+           }
+        }
+        console.log(boy_array);
+        console.log(tot_len);
+        let start=0;
+        let f_len=6;
+        while(flames.length>1)
+        {
+          let new_=[];
+          console.log("new");
+          for (let index = 0; index < tot_len-1; index++) {
+            start=start+1;
+            if(start==f_len)
+              start=0;
+            console.log(start);
+          }
+          let check=(flames[start]);
+          flames.forEach(element => {
+            if(element!=check)
+              new_.push(element);
+          });
+          if(start==f_len-1)
+          start=0;
+          flames=new_;
+          console.log(flames);
+          f_len-=1;
+        }
+        // alert(tot_len+flames[0]);
+        document.getElementById('finale').innerHTML=flames[0];
+        document.getElementById('boy_pic').innerHTML=`<img src="./images/`+document.getElementById("paiyan").value+`.jpg" class="photo">`;
+        document.getElementById('girl_pic').innerHTML=`<img src="./images/`+document.getElementById("ponnu").value+`.jpg" class="photo">`;
+        document.getElementById('res_pic').innerHTML=`<img src="./images/`+flames[0]+`.jpg" class="photo">`;
+      }
+    </script>
+  </body>
+</html>
